@@ -1,12 +1,24 @@
-// Cuando queremos que nuestros eventos se carguen, posterior a la carga de todo el HTML
 document.addEventListener('DOMContentLoaded', function () {
 
-  // Seleccionamos los elementos de la interfaz
   const inputEmail = document.querySelector('#email');
   const inputAsunto = document.querySelector('#asunto');
   const inputMensaje = document.querySelector('#mensaje');
 
-  console.log(inputMensaje); // verificamos que es elemento correcto
+  // Asignemos los eventos a cada input
+  inputEmail.addEventListener('blur', function () {
+    // Este evento se ejecuta cuando sales de un campo
+    console.log('Sali del input...');
+  })
+
+  inputAsunto.addEventListener('input', function () {
+    // Este evento se ejecuta mientras vayas escribiendo el input
+    console.log('Esto viene del inputAsunto...');
+  })
+
+  inputMensaje.addEventListener('blur', function (e) {
+    // Este evento se ejecuta mientras vayas escribiendo el input
+    console.log(e.target); // me trae solo cuando salgo del input o textarea realmente
+  })
 
 });
 
@@ -16,10 +28,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
 /**Comentarios extras:
  * 
- * 1.- Lo que podemos ver es que tenemos un formulario con 3 campos (Email, Asunto, Mensaje), de los cuales deben pasar sus respectivas validaciones, como leeremos los datos de un formulario
+ * 1.- Es momento de trabajar con los eventos, por cada input creado, no es más que el registro de unos eventos, para que se ejecute ciertas funciones.
  * 
- * 2.- Nos aseguramos que funcionen los eventos post descarga de todo el documento.
+ * 2.- Hablando de eventos, en los formularios, los mas usados son "input", "blur", "focus", no tendria mucho sentido usar el "click"
  * 
- * 3.- Comenzamos a seleccionar los impunts que trabajaran con los eventos
- * 
+ * 3.- Para cubrir la validaciones, yo debe ver, escuchar o como quieras interpretar, lo que el usuario coloca en el input y eso lo podemos lograr, pasando el evento como parametro a la funcion callback y accediendo a las propiedades del evento
  */
