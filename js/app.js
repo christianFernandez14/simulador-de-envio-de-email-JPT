@@ -4,21 +4,16 @@ document.addEventListener('DOMContentLoaded', function () {
   const inputAsunto = document.querySelector('#asunto');
   const inputMensaje = document.querySelector('#mensaje');
 
-  // Asignemos los eventos a cada input
-  inputEmail.addEventListener('blur', function () {
-    // Este evento se ejecuta cuando sales de un campo
-    console.log('Sali del input...');
-  })
+  inputEmail.addEventListener('blur', validar);
 
-  inputAsunto.addEventListener('input', function () {
-    // Este evento se ejecuta mientras vayas escribiendo el input
-    console.log('Esto viene del inputAsunto...');
-  })
+  inputAsunto.addEventListener('blur', validar);
 
-  inputMensaje.addEventListener('blur', function (e) {
-    // Este evento se ejecuta mientras vayas escribiendo el input
-    console.log(e.target); // me trae solo cuando salgo del input o textarea realmente
-  })
+  inputMensaje.addEventListener('blur', validar);
+
+  function validar(event) {
+    console.log(event.target.value);
+
+  }
 
 });
 
@@ -28,9 +23,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 /**Comentarios extras:
  * 
- * 1.- Es momento de trabajar con los eventos, por cada input creado, no es más que el registro de unos eventos, para que se ejecute ciertas funciones.
+ * 1.- Dejemos los eventos 'blur' y luego probaremos con otros.
  * 
- * 2.- Hablando de eventos, en los formularios, los mas usados son "input", "blur", "focus", no tendria mucho sentido usar el "click"
- * 
- * 3.- Para cubrir la validaciones, yo debe ver, escuchar o como quieras interpretar, lo que el usuario coloca en el input y eso lo podemos lograr, pasando el evento como parametro a la funcion callback y accediendo a las propiedades del evento
+ * 2.- Viendo que el callback sera como repetitivo, lo ideal es hacer una Fn y desarrollar toda la logiica ahi
  */
