@@ -5,15 +5,18 @@ document.addEventListener('DOMContentLoaded', function () {
   const inputMensaje = document.querySelector('#mensaje');
 
   inputEmail.addEventListener('blur', validar);
-
   inputAsunto.addEventListener('blur', validar);
-
   inputMensaje.addEventListener('blur', validar);
 
   function validar(event) {
-    console.log(event.target.value);
+    // Comprobando que esta vacio el campo
+    if (event.target.value.trim() === '') {
+      console.log('Esta vacio');
+    } else {
+      console.log(event.target.value.trim());
+    }
 
-  }
+  };
 
 });
 
@@ -23,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 /**Comentarios extras:
  * 
- * 1.- Dejemos los eventos 'blur' y luego probaremos con otros.
+ * 1.- La idea del formulario es que sea llenado, por lo tanto vamos a validar que No esten vacios
  * 
- * 2.- Viendo que el callback sera como repetitivo, lo ideal es hacer una Fn y desarrollar toda la logiica ahi
+ * 2.- Recomendable que uses .trim; para eliminar espacios en blanco al incio y al final de un string
  */
