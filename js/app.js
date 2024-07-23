@@ -12,11 +12,12 @@ document.addEventListener('DOMContentLoaded', function () {
   function validar(event) {
     const valorInput = event.target.value
 
-    console.log(event.target.id); // cada input tiene asociado un Id
+    const valorReferencia = event.target.parentElement
+    // Haciendo algo de traversing
+    console.log(event.target.parentElement);
 
     if (valorInput.trim() === '') {
-      // Hacemos dinámico el mensaje de la alerta
-      mostrarAlerta(`El campo ${event.target.id} es obligatorio`);
+      mostrarAlerta(`El campo ${event.target.id} es obligatorio`, valorReferencia);
 
     } else {
       console.log(valorInput.trim());
@@ -24,11 +25,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
   };
 
-  function mostrarAlerta(mensaje) {
+  // Le pasamos la referencia como otro parametro
+  function mostrarAlerta(mensaje, referencia) {
     const error = document.createElement('P');
     error.textContent = mensaje;
     error.classList.add('bg-red-600', 'text-white', 'p-2', 'text-center')
-    formulario.appendChild(error)
+    // Dejamos de apuntar al formulario y nos fijamos de la referencia.
+    referencia.appendChild(error)
 
   };
 
@@ -39,7 +42,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
 /**Comentarios extras:
  * 
- * 1.- Hasta este punto solo generamos un texto que dice que hay un error, debemos personalizar un poco más ese mesaje, para saber que tipo de error es.
+ * 1.- Hasta ahora los mensajes de alerta, no estan sino hasta al final del formulario, estos es producto del appendChild que tiene.
  * 
- * 2.- Hacemos uso del argumento y parametros en la función para que podamos personalizarla mejor
+ * 2.- Hcaemos traversing al docuemento, hasta ubicar donde queremos posicionarnos, para de luego dejar de apuntar al formulario completo y solo enfoncarnos en el elemento donde queremos inyectar el mensaje
+ * 
  */
