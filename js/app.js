@@ -9,13 +9,25 @@ document.addEventListener('DOMContentLoaded', function () {
   inputMensaje.addEventListener('blur', validar);
 
   function validar(event) {
-    // Comprobando que esta vacio el campo
-    if (event.target.value.trim() === '') {
-      console.log('Esta vacio');
+    const valorInput = event.target.value
+
+    if (valorInput.trim() === '') {
+      // Buen momento para separar el codigo y crear otra funcion que se encargue esta logica
+      mostrarAlerta()
     } else {
-      console.log(event.target.value.trim());
+      console.log(valorInput.trim());
     }
 
+  };
+
+  // Se encargara de la logica del error
+  function mostrarAlerta() {
+    // console.log('Hubo un error');
+    // Generando la alerta en un HTML
+    const error = document.createElement('P')
+    error.textContent = 'Hay un error'
+
+    console.log(error);
   };
 
 });
@@ -26,7 +38,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
 /**Comentarios extras:
  * 
- * 1.- La idea del formulario es que sea llenado, por lo tanto vamos a validar que No esten vacios
+ * 1.- Creamos una variables para guardar el valor del input
  * 
- * 2.- Recomendable que uses .trim; para eliminar espacios en blanco al incio y al final de un string
+ * 2.- Interactuamos con el usuario indicandole que hay un error; con una "alerta" y debe resolverlo.
+ * 
+ * 3.- Hasta ahora solo hemos visto lo mensaje por la consola, para ver si esta comunicandose nuestras funciones, pero la idea es que usuario vea lo que esta pasando.
+ * 
+ * 4.- Puedes ir creando tu elemento como mas guste, agregado atributos, clases, entre otras cosas
  */
