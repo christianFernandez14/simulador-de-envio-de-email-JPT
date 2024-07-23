@@ -12,8 +12,11 @@ document.addEventListener('DOMContentLoaded', function () {
   function validar(event) {
     const valorInput = event.target.value
 
+    console.log(event.target.id); // cada input tiene asociado un Id
+
     if (valorInput.trim() === '') {
-      mostrarAlerta();
+      // Hacemos dinámico el mensaje de la alerta
+      mostrarAlerta(`El campo ${event.target.id} es obligatorio`);
 
     } else {
       console.log(valorInput.trim());
@@ -21,13 +24,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
   };
 
-  function mostrarAlerta() {
+  function mostrarAlerta(mensaje) {
     const error = document.createElement('P');
-    error.textContent = 'Hay un error';
-    // agreamos algunas clases de tailwind, para que lusca como una alerta de verdad
+    error.textContent = mensaje;
     error.classList.add('bg-red-600', 'text-white', 'p-2', 'text-center')
-
-    // Inyectamos el error al formulario
     formulario.appendChild(error)
 
   };
@@ -39,9 +39,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 /**Comentarios extras:
  * 
- * 1.- El documento hasta ahora, nuevamente lo muestra en consola
+ * 1.- Hasta este punto solo generamos un texto que dice que hay un error, debemos personalizar un poco más ese mesaje, para saber que tipo de error es.
  * 
- * 2.- Llevemos ese elemento al HTML
- * 
- * 3.- Apuntamos al elemento del formulario y le hacemos un append, pero te daras cuentas que lo agrega al final del elemento seleccionado
+ * 2.- Hacemos uso del argumento y parametros en la función para que podamos personalizarla mejor
  */
