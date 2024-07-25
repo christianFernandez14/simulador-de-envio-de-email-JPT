@@ -26,17 +26,23 @@ document.addEventListener('DOMContentLoaded', function () {
     spinner.classList.remove('hidden');
 
     setTimeout(() => {
-      // desabilitamos y habilitamos las clases anteriores
       spinner.classList.remove('flex');
       spinner.classList.add('hidden');
 
-      // Reiniciamos nuestro objeto
-      email.email = '';
-      email.asunto = '';
-      email.mensaje = '';
+      resetFormulario();
 
-      formulario.reset();
-      comprobarEmail();
+
+      // Añadimos alerta de envio de formulario
+      const alertaExito = document.createElement('P');
+      alertaExito.classList.add('bg-green-500', 'text-white', 'p-2', 'text-center', 'rounded-lg', 'mt-10', 'font-bold', 'text-sm', 'uppercase');
+      alertaExito.textContent = 'Mensaje enviado correctamente';
+
+      formulario.appendChild(alertaExito);
+
+      // Como se quedaba el mensaje en HTML, le agregamos otro setTimeout, para tuviera un tiempo finito
+      setTimeout(() => {
+        alertaExito.remove()
+      }, 2500);
 
     }, 3000);
 
@@ -45,12 +51,7 @@ document.addEventListener('DOMContentLoaded', function () {
   btnReset.addEventListener('click', function (event) {
     event.preventDefault();
 
-    email.email = '';
-    email.asunto = '';
-    email.mensaje = '';
-
-    formulario.reset();
-    comprobarEmail();
+    resetFormulario()
   })
 
   function validar(event) {
@@ -118,7 +119,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
   }
 
+  function resetFormulario() {
+    email.email = '';
+    email.asunto = '';
+    email.mensaje = '';
 
+    formulario.reset();
+    comprobarEmail();
+
+  }
 });
 
 
@@ -126,11 +135,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
 /**Comentarios extras:
  * 
- * 1.- Perfecto ya logramos ver el spinner; pero la idea es que duro un tipo de simulacion y no se ve más, para eso usaremos un settimeout, para simular que se esta enviando el email
+ * 1.- Antes de continuar con el diseño del mesaje que el formulario fue enviado, podras ver que hay codigo que se repite, el de reiniciar el formulario, creo que es momento de hacer una funcion que se encargue de esa logica. y lo sustitumos por los codigos.
  * 
- * 2.- Nos apoyamos de funciones propias de Js, como la setTimeOut, para hacer esa simulacion
- * 
- * 3.- Hacemos como un toggle, añdimos y quitamos clases para simular el punto anterior
+ * 2.- Luego de solucionado lo anterior, creamos un script dentro de setTimeOut, pero de requerirlo en otra parte ahi si diseñamos una funcnión.
  * 
  * 
  */
