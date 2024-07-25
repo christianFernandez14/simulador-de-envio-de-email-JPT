@@ -9,33 +9,38 @@ document.addEventListener('DOMContentLoaded', function () {
   const inputEmail = document.querySelector('#email');
   const inputAsunto = document.querySelector('#asunto');
   const inputMensaje = document.querySelector('#mensaje');
-  const formulario = document.querySelector('#formulario')
-  const btnSubmit = document.querySelector('#botones button[type="submit"]')
-  const btnReset = document.querySelector('#botones button[type="reset"]')
-
-  // Tomamos el elemento que creamos, para poder manipular su accion
-  const spinner = document.querySelector('#spinner')
-
-  console.log(spinner);
+  const formulario = document.querySelector('#formulario');
+  const btnSubmit = document.querySelector('#botones button[type="submit"]');
+  const btnReset = document.querySelector('#botones button[type="reset"]');
+  const spinner = document.querySelector('#spinner');
 
   inputEmail.addEventListener('input', validar);
   inputAsunto.addEventListener('input', validar);
   inputMensaje.addEventListener('input', validar);
-
-  // Aca escucharemos el evento del envio
   formulario.addEventListener('submit', enviarEmail)
 
   function enviarEmail(event) {
     event.preventDefault();
 
-    console.log('Enviando...');
-
     spinner.classList.add('flex');
     spinner.classList.remove('hidden');
 
+    setTimeout(() => {
+      // desabilitamos y habilitamos las clases anteriores
+      spinner.classList.remove('flex');
+      spinner.classList.add('hidden');
+
+      // Reiniciamos nuestro objeto
+      email.email = '';
+      email.asunto = '';
+      email.mensaje = '';
+
+      formulario.reset();
+      comprobarEmail();
+
+    }, 3000);
 
   }
-
 
   btnReset.addEventListener('click', function (event) {
     event.preventDefault();
@@ -121,7 +126,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
 /**Comentarios extras:
  * 
- * 1.- Una vez comprobado los cmapos, las validaciones y que ambos botones se estan comportando como queremos, vamos a simular que estamos enviado el formulario.
+ * 1.- Perfecto ya logramos ver el spinner; pero la idea es que duro un tipo de simulacion y no se ve más, para eso usaremos un settimeout, para simular que se esta enviando el email
  * 
- * 2.- Trabajamos añadiendo algo mas visual e interactivo con el usuario, un spinner
+ * 2.- Nos apoyamos de funciones propias de Js, como la setTimeOut, para hacer esa simulacion
+ * 
+ * 3.- Hacemos como un toggle, añdimos y quitamos clases para simular el punto anterior
+ * 
+ * 
  */
