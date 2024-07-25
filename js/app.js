@@ -13,20 +13,36 @@ document.addEventListener('DOMContentLoaded', function () {
   const btnSubmit = document.querySelector('#botones button[type="submit"]')
   const btnReset = document.querySelector('#botones button[type="reset"]')
 
+  // Tomamos el elemento que creamos, para poder manipular su accion
+  const spinner = document.querySelector('#spinner')
+
+  console.log(spinner);
+
   inputEmail.addEventListener('input', validar);
   inputAsunto.addEventListener('input', validar);
   inputMensaje.addEventListener('input', validar);
 
-  btnReset.addEventListener('click', function (event) {
-    event.preventDefault(); // acá prevenimos el evento por default
+  // Aca escucharemos el evento del envio
+  formulario.addEventListener('submit', enviarEmail)
 
-    // Reiniciamos el objeto
+  function enviarEmail(event) {
+    event.preventDefault();
+
+    console.log('Enviando...');
+
+    spinner.classList.add('flex');
+    spinner.classList.remove('hidden');
+
+
+  }
+
+
+  btnReset.addEventListener('click', function (event) {
+    event.preventDefault();
+
     email.email = '';
     email.asunto = '';
     email.mensaje = '';
-
-    // viendo que propiedades tiene el elemento formulario
-    console.log(formulario);
 
     formulario.reset();
     comprobarEmail();
@@ -97,6 +113,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   }
 
+
 });
 
 
@@ -104,11 +121,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 /**Comentarios extras:
  * 
- * 1.- Antes de continuar con el boton de reset, modifiquemos un poco la funcion comprobarEmail, para que dejar de utulizar if y else.
+ * 1.- Una vez comprobado los cmapos, las validaciones y que ambos botones se estan comportando como queremos, vamos a simular que estamos enviado el formulario.
  * 
- * 2.- Para ver un poco mas en tiempo real, el tipo de envento que usabamos en los input; cambiemolo por el de tipo "input"
- * 
- * 3.- Volviendo a a nuestro boton "reset", desde el HTML, nos percatamos que viene por default su comportambiento, ya que encontramos el atributo "type=reset", la idea acá es interactuar un poco con el usuario
- * 
- * 4.- A pesar que le quitamos el comportamiento por default, debes tambien considerar limpiar el objeto y comprobar los campos
+ * 2.- Trabajamos añadiendo algo mas visual e interactivo con el usuario, un spinner
  */
