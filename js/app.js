@@ -1,19 +1,21 @@
 document.addEventListener('DOMContentLoaded', function () {
 
-  // Creamos un objeto, para que la validacion de todas sus propiedades en conjunto me pueda habilitar el boton del enviar, es como una referencia para verificar que todo los campos esten llenos
   const email = {
     email: '',
     asunto: '',
     mensaje: ''
   }
 
-  // Verificamos que el objeto este vacio
-  console.log(email);
-
   const inputEmail = document.querySelector('#email');
   const inputAsunto = document.querySelector('#asunto');
   const inputMensaje = document.querySelector('#mensaje');
   const formulario = document.querySelector('#formulario')
+
+  // Haciendo referencia a los botones
+  const btnSubmit = document.querySelector('#botones button[type="submit"]')
+  const btnReset = document.querySelector('#botones button[type="reset"]')
+
+  // console.log(btnReset); // viendo que estoy tomando el elemento correcto
 
   inputEmail.addEventListener('blur', validar);
   inputAsunto.addEventListener('blur', validar);
@@ -25,24 +27,29 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (valorInput.trim() === '') {
       mostrarAlerta(`El campo ${event.target.id} es obligatorio`, valorReferencia);
+
+      // Reiniciando la propiedad y validando los campos
+      email[event.target.name] = ''
+      comprobarEmail();
       return;
 
     }
 
     if (!validarEmail(valorInput) && event.target.id === 'email') {
       mostrarAlerta('No es un email valido', valorReferencia);
+
+      // Reiniciando la propiedad y validando los campos
+      email[event.target.name] = ''
+      comprobarEmail();
       return;
 
     }
 
     limpiarAlerta(valorReferencia);
 
-    // Buen lugar para cargar el objeto "email", que me servira para habilitar el objeto, por lo tanto asiganamos los valores dinamicamente.
-    email[event.target.name] = event.target.value.trim().toLowerCase() // Trim, para siempre asegurarme de no guardar espacios inecesarios.
+    email[event.target.name] = event.target.value.trim().toLowerCase()
 
-    // Probamos que tal, a ver si lo esta guardando correctamente
-    console.log(email);
-    // Comprobamos el objeto email
+    // Habilitando boton
     comprobarEmail()
 
   }
@@ -74,9 +81,20 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   function comprobarEmail() {
-    // console.log('Desde la funcion comprobar email...');// esta entrando
-    console.log(Object.values(email).includes('')); // Convierto mi objeto en un array de los valores de ese objeto
-    // Con la validacion anterior, no solo conseguimos un array, sino tambien iteramos sobre ella, para saber si algun input o valor mejor dicho; esta vacio.
+    if (Object.values(email).includes('')) {
+      // console.log('boton habilitado...');
+
+      console.log(email); // viendo como se llena, pero no se borrar del obejto al elimninarlo del input
+
+      // Habilitando el boton
+      btnSubmit.classList.add('opacity-50');
+      btnSubmit.disabled = true;
+
+    } else {
+      // desabilitando el boton
+      btnSubmit.classList.remove('opacity-50');
+      btnSubmit.disabled = false;
+    }
 
   }
 
@@ -87,11 +105,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
 /**Comentarios extras:
  * 
- * 1.- Listo, ya tenemos todas la posibles validaciones de los 3 inputs del proyecto, pero aun no se me habilita el boton de "enviar" y mucho menos esta habilitado el de "reset"
+ * 1.- Con el escenario más claro de lo que tenemos o no en el objeto, podemos trabajar para habilitar el boton 
  * 
- * 2.- Creamos un objeto, mejor opcion para ir guardando los valores que el usuario vaya colocando en los inputs
+ * 2.- Debemos tomar referencia de los botones, tanto el submit como el reset
  * 
- * 2.- La pregunta que nos debemos hacer, es donde ir cargando los valores del objeto creado, buena pregunta no; la mejor opcion es luego de pasar todas las validaciones, y debes usar una función para hacerlo
+ * 3.- Con la funcion que estamos desarrollando, debemos tener cuidado que si elimino algun dato de algun input, este boton (submit), debe desabilitarse nuevo, y para ello lo ideal es llamar la funcion luego de comprobar todo 
  * 
- * 3.- Una vez en la función, accedo a la propiedad de Objetc.values, para obtener un array con los valores de las propiedades del objeto.
+ * 4.- Debes reiniciar la propiedad, para que pueda validar si hay campo vacio o no, ya que lo puedes 
  */
