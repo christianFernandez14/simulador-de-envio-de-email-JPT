@@ -10,16 +10,27 @@ document.addEventListener('DOMContentLoaded', function () {
   const inputAsunto = document.querySelector('#asunto');
   const inputMensaje = document.querySelector('#mensaje');
   const formulario = document.querySelector('#formulario')
-
-  // Haciendo referencia a los botones
   const btnSubmit = document.querySelector('#botones button[type="submit"]')
   const btnReset = document.querySelector('#botones button[type="reset"]')
 
-  // console.log(btnReset); // viendo que estoy tomando el elemento correcto
+  inputEmail.addEventListener('input', validar);
+  inputAsunto.addEventListener('input', validar);
+  inputMensaje.addEventListener('input', validar);
 
-  inputEmail.addEventListener('blur', validar);
-  inputAsunto.addEventListener('blur', validar);
-  inputMensaje.addEventListener('blur', validar);
+  btnReset.addEventListener('click', function (event) {
+    event.preventDefault(); // acá prevenimos el evento por default
+
+    // Reiniciamos el objeto
+    email.email = '';
+    email.asunto = '';
+    email.mensaje = '';
+
+    // viendo que propiedades tiene el elemento formulario
+    console.log(formulario);
+
+    formulario.reset();
+    comprobarEmail();
+  })
 
   function validar(event) {
     const valorInput = event.target.value;
@@ -27,8 +38,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (valorInput.trim() === '') {
       mostrarAlerta(`El campo ${event.target.id} es obligatorio`, valorReferencia);
-
-      // Reiniciando la propiedad y validando los campos
       email[event.target.name] = ''
       comprobarEmail();
       return;
@@ -37,8 +46,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (!validarEmail(valorInput) && event.target.id === 'email') {
       mostrarAlerta('No es un email valido', valorReferencia);
-
-      // Reiniciando la propiedad y validando los campos
       email[event.target.name] = ''
       comprobarEmail();
       return;
@@ -46,10 +53,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     limpiarAlerta(valorReferencia);
-
     email[event.target.name] = event.target.value.trim().toLowerCase()
-
-    // Habilitando boton
     comprobarEmail()
 
   }
@@ -82,19 +86,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function comprobarEmail() {
     if (Object.values(email).includes('')) {
-      // console.log('boton habilitado...');
 
-      console.log(email); // viendo como se llena, pero no se borrar del obejto al elimninarlo del input
-
-      // Habilitando el boton
       btnSubmit.classList.add('opacity-50');
       btnSubmit.disabled = true;
+      return;
 
-    } else {
-      // desabilitando el boton
-      btnSubmit.classList.remove('opacity-50');
-      btnSubmit.disabled = false;
     }
+    btnSubmit.classList.remove('opacity-50');
+    btnSubmit.disabled = false;
 
   }
 
@@ -105,11 +104,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
 /**Comentarios extras:
  * 
- * 1.- Con el escenario más claro de lo que tenemos o no en el objeto, podemos trabajar para habilitar el boton 
+ * 1.- Antes de continuar con el boton de reset, modifiquemos un poco la funcion comprobarEmail, para que dejar de utulizar if y else.
  * 
- * 2.- Debemos tomar referencia de los botones, tanto el submit como el reset
+ * 2.- Para ver un poco mas en tiempo real, el tipo de envento que usabamos en los input; cambiemolo por el de tipo "input"
  * 
- * 3.- Con la funcion que estamos desarrollando, debemos tener cuidado que si elimino algun dato de algun input, este boton (submit), debe desabilitarse nuevo, y para ello lo ideal es llamar la funcion luego de comprobar todo 
+ * 3.- Volviendo a a nuestro boton "reset", desde el HTML, nos percatamos que viene por default su comportambiento, ya que encontramos el atributo "type=reset", la idea acá es interactuar un poco con el usuario
  * 
- * 4.- Debes reiniciar la propiedad, para que pueda validar si hay campo vacio o no, ya que lo puedes 
+ * 4.- A pesar que le quitamos el comportamiento por default, debes tambien considerar limpiar el objeto y comprobar los campos
  */
